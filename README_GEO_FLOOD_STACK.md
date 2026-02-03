@@ -22,8 +22,9 @@ This workflow combines three Earth Engine datasets:
 1. Open the Google Earth Engine Code Editor.
 2. Paste the contents of `geo_flood_stack_gee.js` into a new script.
 3. (Optional) Draw a custom ROI in the map. If you do nothing, the script falls back to the default bbox around `(-13.7002778, -63.9277778)`.
-4. Click **Run**.
-5. Use the UI panel to:
+4. (Optional) To show a KML/KMZ polygon outline, upload it as an Earth Engine asset and set `KML_ASSET` to the asset ID. The outline is displayed as a line-only reference layer and does **not** replace the ROI.
+5. Click **Run**.
+6. Use the UI panel to:
    - Toggle the GFPLAIN mask.
    - Select a hazard return period and depth threshold.
    - Load a GFD event by `id`.
@@ -57,6 +58,19 @@ This workflow combines three Earth Engine datasets:
 
 - The Global Flood Database uses the `id` property for event selection.
 - If an event ID is missing or invalid, `.first()` returns `null` and the script will error.
+
+---
+
+## Can I run everything locally on my computer?
+
+- **GEE JavaScript apps** (like `geo_flood_stack_gee.js`) only run inside the **Earth Engine Code Editor** in a browser. You can edit the file locally, but you must paste it into https://code.earthengine.google.com to execute it.
+- **Python notebooks** can be run locally in VSCode if you:
+  1. Install Python + create a virtual environment.
+  2. `pip install earthengine-api geemap matplotlib`.
+  3. Authenticate Earth Engine locally (`earthengine authenticate`) and set `EE_PROJECT`.
+  4. Run the `.py` fallback or open the `.ipynb` with the Jupyter extension.
+
+Colab remains the simplest option because it handles auth and dependencies quickly, but local execution is possible for the Python workflow.
 
 ---
 

@@ -14,6 +14,7 @@ var DEFAULT_EVENT_ID = 1102; // example GFD event id
 var DEFAULT_RP = 100;
 var DEFAULT_DEPTH_THRESHOLD = 0.5; // meters
 var EXPORT_FOLDER = 'GEO_FLOOD_EXPORTS';
+var KML_ASSET = null; // Optional: 'users/you/roi_outline' (KML/KMZ asset ID)
 
 var SCALE_HAZARD = 90;   // meters (hazard v2.1 ~90m)
 var SCALE_GFPLAIN = 250; // meters
@@ -42,6 +43,11 @@ Map.centerObject(geometry, 8);
 Map.addLayer(geometry, {color: 'red'}, 'ROI');
 Map.addLayer(referencePoint, {color: 'white'}, 'Reference point (13°42\'01"S, 63°55\'40"W)');
 print('Reference point (lat, lon):', DEFAULT_LAT, DEFAULT_LON);
+if (KML_ASSET) {
+  var kmlOutline = ee.FeatureCollection(KML_ASSET);
+  var kmlStyle = {color: 'yellow', fillColor: '00000000', width: 2};
+  Map.addLayer(kmlOutline.style(kmlStyle), {}, 'KML/KMZ outline');
+}
 
 // -----------------------
 // Data load
