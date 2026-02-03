@@ -32,6 +32,17 @@ var geometry = (typeof geometry !== 'undefined') ? geometry : fallbackGeometry;
 Map.centerObject(geometry, 8);
 Map.addLayer(geometry, {color: 'red'}, 'ROI');
 
+// Optional: load a KML/KMZ asset as a line-only overlay (no fill).
+// 1) Upload KML/KMZ to your GEE Assets.
+// 2) Set KML_ASSET to the asset ID (e.g., 'users/you/roi_outline').
+// 3) The outline is displayed only; it does not replace the ROI geometry.
+var KML_ASSET = null; // e.g. 'users/you/roi_outline'
+if (KML_ASSET) {
+  var kmlFc = ee.FeatureCollection(KML_ASSET);
+  var kmlStyle = {color: 'yellow', fillColor: '00000000', width: 2};
+  Map.addLayer(kmlFc.style(kmlStyle), {}, 'KML/KMZ Outline');
+}
+
 // -----------------------
 // Data load + inspection
 // -----------------------
@@ -76,6 +87,7 @@ rpValues.evaluate(function(values) {
   var sorted = values.sort(function(a, b) { return a - b; });
   rpSelect.items().reset(sorted.map(function(v) { return String(v); }));
   rpSelect.setValue(String(DEFAULT_RETURN_PERIODS[0]));
+  updateLayers();
 });
 
 function getFloodImage(rp) {
@@ -101,6 +113,10 @@ function addFloodLayer(rp) {
 }
 
 function updateLayers() {
+  if (!rpSelect.getValue()) {
+    print('Waiting for return period list to load...');
+    return;
+  }
   clearFloodLayers();
   if (checkboxRp10.getValue()) addFloodLayer(10);
   if (checkboxRp20.getValue()) addFloodLayer(20);
@@ -138,5 +154,4 @@ exportButton.onClick(function() {
   });
 });
 
-// Initialize default layers + histogram.
-updateLayers();
+// Initialize default layers + histogram after return periods load.

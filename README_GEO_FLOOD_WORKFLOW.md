@@ -27,6 +27,7 @@ This workflow reproduces the reference scripts:
 1. Open the **Google Earth Engine Code Editor**.
 2. Paste the contents of `geo_flood_depth_v1.js` into a new script.
 3. **Optional**: draw a custom ROI polygon in the map (the script uses it automatically). If you do nothing, it falls back to a default rectangle around `(-13.7002778, -63.9277778)`.
+4. **Optional (KML/KMZ outline)**: upload your KML/KMZ to Earth Engine Assets and set `KML_ASSET` in the script. The outline is drawn with **no fill**.
 4. Click **Run**.
 5. Use the UI panel to:
    - Toggle RP10/RP20/RP100 layers.
@@ -54,7 +55,7 @@ This workflow reproduces the reference scripts:
 1. Open the notebook in **Google Colab**.
 2. In **Cell 3**, set `EE_PROJECT` or export `EE_PROJECT` in the environment.
 3. Run all cells from top to bottom.
-4. In **Cell 4**, draw your ROI if desired (use drawing tools on the map).
+4. In **Cell 4**, draw your ROI if desired (use drawing tools on the map), or upload a KML/KMZ outline in the **Optional KML/KMZ** cell.
 5. Verify that the notebook prints:
    - ERA5 image count
    - Sentinel‑1 scene count
@@ -66,6 +67,9 @@ This workflow reproduces the reference scripts:
 - `outputs/prcp_2018-01-01_to_2020-12-31.png`
 - `outputs/flood_diff_2019-03_vs_2019-04.png`
 
+### If the notebook fails to open
+- If your environment throws a JSON parsing error or syntax error for `.ipynb`, run the `.py` version: `geo_xee_precip_and_s1_flood.py` (cell separators included).
+
 ---
 
 ## Common failures & fixes
@@ -74,6 +78,7 @@ This workflow reproduces the reference scripts:
 - The map drawing tool might not have been used.
 - Fix: draw a polygon or rectangle, then re-run the ROI cell.
 - If still missing, the notebook will **fallback** to the default bbox.
+- If using KML/KMZ, ensure the file is a valid polygon/line in EPSG:4326.
 
 ### Too many pixels / request too large
 - Reduce ROI size.
