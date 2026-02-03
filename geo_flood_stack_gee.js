@@ -180,6 +180,11 @@ function loadEvent() {
 
   clearLayerByPrefix('GFD');
 
+  if (!img) {
+    print('No GFD event found for id:', eventId);
+    return;
+  }
+
   var flooded = img.select('flooded');
   var duration = img.select('duration');
   var permWater = img.select('jrc_perm_water');
@@ -204,6 +209,10 @@ function computeMetrics() {
   var eventId = parseInt(eventIdInput.getValue(), 10);
 
   var img = getGfdImage(eventId);
+  if (!img) {
+    print('No GFD event found for id:', eventId);
+    return;
+  }
   var obs = img.select('flooded').eq(1);
   if (maskPermWaterCheckbox.getValue()) {
     obs = obs.and(img.select('jrc_perm_water').neq(1));
@@ -248,6 +257,10 @@ function exportLayers() {
   var gf = gfplain.clip(roi);
   var haz = getHazardImage(roi, rp);
   var img = getGfdImage(eventId);
+  if (!img) {
+    print('No GFD event found for id:', eventId);
+    return;
+  }
 
   var flooded = img.select('flooded');
   var duration = img.select('duration');
