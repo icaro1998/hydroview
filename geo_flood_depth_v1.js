@@ -20,6 +20,7 @@ var VIS_PARAMS = {
 // ROI handling
 // -----------------------
 // If a drawn geometry exists (Code Editor), use it. Otherwise fallback to default bbox.
+var referencePoint = ee.Geometry.Point([DEFAULT_LON, DEFAULT_LAT]);
 var fallbackGeometry = ee.Geometry.Rectangle([
   DEFAULT_LON - DEFAULT_BBOX_HALF_DEG,
   DEFAULT_LAT - DEFAULT_BBOX_HALF_DEG,
@@ -31,6 +32,8 @@ var geometry = (typeof geometry !== 'undefined') ? geometry : fallbackGeometry;
 
 Map.centerObject(geometry, 8);
 Map.addLayer(geometry, {color: 'red'}, 'ROI');
+Map.addLayer(referencePoint, {color: 'white'}, 'Reference point (13°42\'01\"S, 63°55\'40\"W)');
+print('Reference point (lat, lon):', DEFAULT_LAT, DEFAULT_LON);
 
 // Optional: load a KML/KMZ asset as a line-only overlay (no fill).
 // 1) Upload KML/KMZ to your GEE Assets.

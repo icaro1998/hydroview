@@ -5,6 +5,8 @@ This workflow reproduces the reference scripts:
 - **FloodHazard v1 flood depth** (GEE JavaScript)
 - **ERA5 monthly precipitation** + **Sentinel‑1 flood difference** (Colab Python with Xee/Xarray)
 
+> **Why two scripts?** The FloodHazard workflow must run inside the **GEE Code Editor** (JavaScript), while the precipitation and Sentinel‑1 faceting depend on **Colab + Xee/Xarray (Python)**. These are different runtimes, so a single copy‑paste script cannot run both end‑to‑end.
+
 ---
 
 ## Requirements
@@ -26,7 +28,7 @@ This workflow reproduces the reference scripts:
 ### Steps
 1. Open the **Google Earth Engine Code Editor**.
 2. Paste the contents of `geo_flood_depth_v1.js` into a new script.
-3. **Optional**: draw a custom ROI polygon in the map (the script uses it automatically). If you do nothing, it falls back to a default rectangle around `(-13.7002778, -63.9277778)`.
+3. **Optional**: draw a custom ROI polygon in the map (the script uses it automatically). If you do nothing, it falls back to a default rectangle around `(-13.7002778, -63.9277778)` and marks the reference point **13°42'01"S 63°55'40"W**.
 4. **Optional (KML/KMZ outline)**: upload your KML/KMZ to Earth Engine Assets and set `KML_ASSET` in the script. The outline is drawn with **no fill**.
 4. Click **Run**.
 5. Use the UI panel to:
